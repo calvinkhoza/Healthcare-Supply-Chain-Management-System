@@ -1,0 +1,399 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Healthcare Supply Chain Management</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link rel="stylesheet" href="css/styles.css">
+    <link rel="stylesheet" href="css/dashboard.css">
+</head>
+<body>
+    <!-- Login Screen (visible by default) -->
+    <div id="login-screen" class="login-container">
+        <div class="login-box">
+            <div class="logo">
+                <i class="fas fa-truck-medical"></i>
+                <h1>Healthcare Supply Chain</h1>
+            </div>
+            <form id="login-form">
+                <div class="form-group">
+                    <label for="username">Username</label>
+                    <input type="text" id="username" placeholder="Enter your username" required>
+                </div>
+                <div class="form-group">
+                    <label for="password">Password</label>
+                    <input type="password" id="password" placeholder="Enter your password" required>
+                </div>
+                <button type="submit" class="btn-login">Login</button>
+            </form>
+            <div class="login-footer">
+                <p>Forgot password? <a href="#">Reset here</a></p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Main App (hidden by default) -->
+    <div id="app-container" class="app-container hidden">
+        <!-- Sidebar Navigation -->
+        <div class="sidebar">
+            <div class="sidebar-header">
+                <i class="fas fa-truck-medical"></i>
+                <h2>Supply Chain</h2>
+            </div>
+            <nav class="sidebar-nav">
+                <ul>
+                    <li class="active" data-section="dashboard">
+                        <i class="fas fa-tachometer-alt"></i>
+                        <span>Dashboard</span>
+                    </li>
+                    <li data-section="inventory">
+                        <i class="fas fa-warehouse"></i>
+                        <span>Inventory</span>
+                    </li>
+                    <li data-section="analytics">
+                        <i class="fas fa-chart-line"></i>
+                        <span>Analytics</span>
+                    </li>
+                    <li data-section="logistics">
+                        <i class="fas fa-route"></i>
+                        <span>Logistics</span>
+                    </li>
+                    <li data-section="suppliers">
+                        <i class="fas fa-truck-loading"></i>
+                        <span>Suppliers</span>
+                    </li>
+                    <li data-section="incidents">
+                        <i class="fas fa-exclamation-triangle"></i>
+                        <span>Incidents</span>
+                    </li>
+                </ul>
+            </nav>
+            <div class="sidebar-footer">
+                <div class="user-profile">
+                    <img src="assets/user-avatar.png" alt="User Avatar">
+                    <div class="user-info">
+                        <span class="username">Admin User</span>
+                        <span class="user-role">System Administrator</span>
+                    </div>
+                    <i class="fas fa-cog"></i>
+                </div>
+                <button id="logout-btn" class="btn-logout">
+                    <i class="fas fa-sign-out-alt"></i> Logout
+                </button>
+            </div>
+        </div>
+
+        <!-- Main Content Area -->
+        <div class="main-content">
+            <!-- Top Navigation Bar -->
+            <header class="top-nav">
+                <div class="nav-left">
+                    <h1 id="page-title">Dashboard</h1>
+                </div>
+                <div class="nav-right">
+                    <div class="search-box">
+                        <input type="text" placeholder="Search...">
+                        <i class="fas fa-search"></i>
+                    </div>
+                    <div class="notifications">
+                        <i class="fas fa-bell"></i>
+                        <span class="notification-badge">3</span>
+                    </div>
+                </div>
+            </header>
+
+            <!-- Dashboard Content -->
+            <div id="dashboard-section" class="content-section">
+                <div class="dashboard-grid">
+                    <!-- Summary Cards -->
+                    <div class="summary-card critical">
+                        <div class="card-icon">
+                            <i class="fas fa-exclamation-circle"></i>
+                        </div>
+                        <div class="card-content">
+                            <h3>Critical Alerts</h3>
+                            <p class="card-value">5</p>
+                            <p class="card-description">Items need immediate attention</p>
+                        </div>
+                    </div>
+
+                    <div class="summary-card inventory">
+                        <div class="card-icon">
+                            <i class="fas fa-warehouse"></i>
+                        </div>
+                        <div class="card-content">
+                            <h3>Total Inventory</h3>
+                            <p class="card-value">1,248</p>
+                            <p class="card-description">Items across all locations</p>
+                        </div>
+                    </div>
+
+                    <div class="summary-card suppliers">
+                        <div class="card-icon">
+                            <i class="fas fa-truck"></i>
+                        </div>
+                        <div class="card-content">
+                            <h3>Active Suppliers</h3>
+                            <p class="card-value">23</p>
+                            <p class="card-description">10 with active shipments</p>
+                        </div>
+                    </div>
+
+                    <div class="summary-card deliveries">
+                        <div class="card-icon">
+                            <i class="fas fa-shipping-fast"></i>
+                        </div>
+                        <div class="card-content">
+                            <h3>Pending Deliveries</h3>
+                            <p class="card-value">17</p>
+                            <p class="card-description">2 delayed shipments</p>
+                        </div>
+                    </div>
+
+                    <!-- Charts Row -->
+                    <div class="chart-container inventory-trend">
+                        <div class="chart-header">
+                            <h3>Inventory Trend</h3>
+                            <div class="chart-actions">
+                                <select>
+                                    <option>Last 7 days</option>
+                                    <option>Last 30 days</option>
+                                    <option>Last 90 days</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="chart" id="inventory-trend-chart">
+                            <!-- Chart will be rendered with JavaScript -->
+                        </div>
+                    </div>
+
+                    <div class="chart-container critical-items">
+                        <div class="chart-header">
+                            <h3>Critical Items</h3>
+                            <div class="chart-actions">
+                                <button class="btn-refresh"><i class="fas fa-sync-alt"></i></button>
+                            </div>
+                        </div>
+                        <div class="chart" id="critical-items-chart">
+                            <!-- Chart will be rendered with JavaScript -->
+                        </div>
+                    </div>
+
+                    <!-- Disruption Map -->
+                    <div class="map-container">
+                        <div class="map-header">
+                            <h3>Supply Chain Disruptions</h3>
+                            <div class="map-legend">
+                                <span class="legend-item"><i class="fas fa-circle minor"></i> Minor</span>
+                                <span class="legend-item"><i class="fas fa-circle moderate"></i> Moderate</span>
+                                <span class="legend-item"><i class="fas fa-circle severe"></i> Severe</span>
+                            </div>
+                        </div>
+                        <div class="map" id="disruption-map">
+                            <!-- Map will be rendered with JavaScript -->
+                            <img src="assets/map-placeholder.png" alt="Disruption Map" class="map-placeholder">
+                            <div class="map-marker" style="top: 30%; left: 25%;" data-severity="severe">
+                                <i class="fas fa-exclamation-triangle"></i>
+                            </div>
+                            <div class="map-marker" style="top: 45%; left: 60%;" data-severity="moderate">
+                                <i class="fas fa-exclamation-triangle"></i>
+                            </div>
+                            <div class="map-marker" style="top: 70%; left: 40%;" data-severity="minor">
+                                <i class="fas fa-exclamation-triangle"></i>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Recent Activity -->
+                    <div class="activity-container">
+                        <div class="activity-header">
+                            <h3>Recent Activity</h3>
+                            <button class="btn-view-all">View All</button>
+                        </div>
+                        <div class="activity-list">
+                            <div class="activity-item alert">
+                                <div class="activity-icon">
+                                    <i class="fas fa-exclamation-circle"></i>
+                                </div>
+                                <div class="activity-content">
+                                    <p><strong>Low stock alert:</strong> N95 Masks below safety threshold</p>
+                                    <span class="activity-time">10 minutes ago</span>
+                                </div>
+                            </div>
+                            <div class="activity-item info">
+                                <div class="activity-icon">
+                                    <i class="fas fa-truck"></i>
+                                </div>
+                                <div class="activity-content">
+                                    <p><strong>Shipment received:</strong> 500 units of Ventilator Parts from MedEquip</p>
+                                    <span class="activity-time">2 hours ago</span>
+                                </div>
+                            </div>
+                            <div class="activity-item warning">
+                                <div class="activity-icon">
+                                    <i class="fas fa-clock"></i>
+                                </div>
+                                <div class="activity-content">
+                                    <p><strong>Delivery delayed:</strong> PPE shipment from HealthSupplies delayed by 2 days</p>
+                                    <span class="activity-time">5 hours ago</span>
+                                </div>
+                            </div>
+                            <div class="activity-item success">
+                                <div class="activity-icon">
+                                    <i class="fas fa-check-circle"></i>
+                                </div>
+                                <div class="activity-content">
+                                    <p><strong>Order fulfilled:</strong> 200 units of Insulin sent to City Hospital</p>
+                                    <span class="activity-time">1 day ago</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Inventory Management Content -->
+            <div id="inventory-section" class="content-section hidden">
+                <div class="inventory-header">
+                    <h2>Inventory Management</h2>
+                    <div class="inventory-actions">
+                        <button class="btn-primary"><i class="fas fa-plus"></i> Add Item</button>
+                        <button class="btn-secondary"><i class="fas fa-file-export"></i> Export</button>
+                        <div class="search-box">
+                            <input type="text" placeholder="Search inventory...">
+                            <i class="fas fa-search"></i>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="inventory-filters">
+                    <div class="filter-group">
+                        <label for="location-filter">Location:</label>
+                        <select id="location-filter">
+                            <option value="all">All Locations</option>
+                            <option value="main-warehouse">Main Warehouse</option>
+                            <option value="central-hospital">Central Hospital</option>
+                            <option value="north-clinic">North Clinic</option>
+                        </select>
+                    </div>
+                    <div class="filter-group">
+                        <label for="category-filter">Category:</label>
+                        <select id="category-filter">
+                            <option value="all">All Categories</option>
+                            <option value="ppe">PPE</option>
+                            <option value="pharmaceuticals">Pharmaceuticals</option>
+                            <option value="equipment">Equipment</option>
+                        </select>
+                    </div>
+                    <div class="filter-group">
+                        <label for="status-filter">Status:</label>
+                        <select id="status-filter">
+                            <option value="all">All Statuses</option>
+                            <option value="in-stock">In Stock</option>
+                            <option value="low-stock">Low Stock</option>
+                            <option value="out-of-stock">Out of Stock</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="inventory-table-container">
+                    <table class="inventory-table">
+                        <thead>
+                            <tr>
+                                <th>Item ID</th>
+                                <th>Item Name</th>
+                                <th>Category</th>
+                                <th>Location</th>
+                                <th>Current Stock</th>
+                                <th>Threshold</th>
+                                <th>Status</th>
+                                <th>Expiry Date</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>MED-1001</td>
+                                <td>N95 Masks</td>
+                                <td>PPE</td>
+                                <td>Main Warehouse</td>
+                                <td>125</td>
+                                <td>200</td>
+                                <td><span class="status-badge warning">Low Stock</span></td>
+                                <td>2023-12-15</td>
+                                <td class="actions">
+                                    <button class="btn-icon" title="Edit"><i class="fas fa-edit"></i></button>
+                                    <button class="btn-icon" title="View Details"><i class="fas fa-eye"></i></button>
+                                    <button class="btn-icon" title="Reorder"><i class="fas fa-shopping-cart"></i></button>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>MED-2045</td>
+                                <td>Ventilator Parts</td>
+                                <td>Equipment</td>
+                                <td>Central Hospital</td>
+                                <td>32</td>
+                                <td>20</td>
+                                <td><span class="status-badge success">In Stock</span></td>
+                                <td>N/A</td>
+                                <td class="actions">
+                                    <button class="btn-icon" title="Edit"><i class="fas fa-edit"></i></button>
+                                    <button class="btn-icon" title="View Details"><i class="fas fa-eye"></i></button>
+                                    <button class="btn-icon" title="Reorder"><i class="fas fa-shopping-cart"></i></button>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>MED-3012</td>
+                                <td>Insulin</td>
+                                <td>Pharmaceuticals</td>
+                                <td>North Clinic</td>
+                                <td>0</td>
+                                <td>50</td>
+                                <td><span class="status-badge danger">Out of Stock</span></td>
+                                <td>2024-05-20</td>
+                                <td class="actions">
+                                    <button class="btn-icon" title="Edit"><i class="fas fa-edit"></i></button>
+                                    <button class="btn-icon" title="View Details"><i class="fas fa-eye"></i></button>
+                                    <button class="btn-icon" title="Reorder"><i class="fas fa-shopping-cart"></i></button>
+                                </td>
+                            </tr>
+                            <!-- More rows would be dynamically loaded -->
+                        </tbody>
+                    </table>
+                </div>
+
+                <div class="inventory-pagination">
+                    <button class="btn-pagination" disabled><i class="fas fa-chevron-left"></i></button>
+                    <button class="btn-pagination active">1</button>
+                    <button class="btn-pagination">2</button>
+                    <button class="btn-pagination">3</button>
+                    <button class="btn-pagination"><i class="fas fa-chevron-right"></i></button>
+                </div>
+            </div>
+
+            <!-- Other sections would follow the same pattern -->
+            <div id="analytics-section" class="content-section hidden">
+                <!-- Analytics content would go here -->
+            </div>
+
+            <div id="logistics-section" class="content-section hidden">
+                <!-- Logistics content would go here -->
+            </div>
+
+            <div id="suppliers-section" class="content-section hidden">
+                <!-- Suppliers content would go here -->
+            </div>
+
+            <div id="incidents-section" class="content-section hidden">
+                <!-- Incidents content would go here -->
+            </div>
+        </div>
+    </div>
+
+    <script src="js/auth.js"></script>
+    <script src="js/app.js"></script>
+    <script src="js/inventory.js"></script>
+    <script src="js/analytics.js"></script>
+</body>
+</html>

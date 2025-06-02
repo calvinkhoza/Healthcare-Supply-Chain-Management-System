@@ -1,0 +1,103 @@
+/* Additional dashboard-specific styles */
+
+/* Chart placeholders */
+#inventory-trend-chart,
+#critical-items-chart {
+  background-color: #f8f9fa;
+  border-radius: 4px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--gray-color);
+  font-size: 0.9rem;
+}
+
+/* Tooltip styles */
+.tooltip {
+  position: absolute;
+  background-color: rgba(0, 0, 0, 0.8);
+  color: white;
+  padding: 0.5rem 0.8rem;
+  border-radius: 4px;
+  font-size: 0.8rem;
+  pointer-events: none;
+  z-index: 100;
+  opacity: 0;
+  transition: opacity 0.2s;
+}
+
+/* Chart axis styles */
+.chart-axis {
+  font-size: 0.7rem;
+  color: var(--gray-color);
+}
+
+/* Legend styles */
+.chart-legend {
+  display: flex;
+  gap: 1rem;
+  margin-top: 1rem;
+  justify-content: center;
+}
+
+.legend-item {
+  display: flex;
+  align-items: center;
+  font-size: 0.8rem;
+  color: var(--gray-color);
+}
+
+.legend-color {
+  width: 12px;
+  height: 12px;
+  border-radius: 2px;
+  margin-right: 0.5rem;
+}
+
+/* Map tooltip styles */
+.map-tooltip {
+  position: absolute;
+  background-color: white;
+  padding: 0.8rem;
+  border-radius: 4px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  font-size: 0.8rem;
+  z-index: 100;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.2s;
+  max-width: 200px;
+}
+
+.map-tooltip h4 {
+  margin-bottom: 0.5rem;
+  color: var(--dark-color);
+}
+
+.map-tooltip p {
+  margin-bottom: 0.3rem;
+  color: #555;
+}
+
+.map-tooltip .severity {
+  display: inline-block;
+  padding: 0.2rem 0.4rem;
+  border-radius: 4px;
+  font-size: 0.7rem;
+  font-weight: 500;
+}
+
+.map-tooltip .severity.minor {
+  background-color: rgba(243, 156, 18, 0.1);
+  color: var(--warning-color);
+}
+
+.map-tooltip .severity.moderate {
+  background-color: rgba(243, 156, 18, 0.2);
+  color: #f39c12;
+}
+
+.map-tooltip .severity.severe {
+  background-color: rgba(231, 76, 60, 0.2);
+  color: var(--danger-color);
+}
